@@ -1,0 +1,101 @@
+package com.enterdomainhere.parker.statefarmsimonsays;
+
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+import java.util.concurrent.TimeUnit;
+
+import static android.media.MediaPlayer.*;
+public class SimonSays extends AppCompatActivity {
+    MediaPlayer mp1;
+    MediaPlayer mp2;
+    MediaPlayer mp3;
+    MediaPlayer mp4;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+         mp1 = MediaPlayer.create(SimonSays.this,R.raw.listen);
+         mp2 = MediaPlayer.create(SimonSays.this,R.raw.door);
+         mp3 = MediaPlayer.create(SimonSays.this,R.raw.bark);
+         mp4 = MediaPlayer.create(SimonSays.this, R.raw.beep);
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_simon_says);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        }
+
+
+    public void playButton1(View view) {
+        mp1.start();
+
+        }
+    public void playButton2(View view) { mp2.start(); }
+    public void playButton3(View view) {
+        mp3.start();
+    }
+    public void playButton4(View view) {
+        mp4.start();
+    }
+    public void wait(int seconds){
+        try {
+
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException e) {
+            System.out.println("oops didn't sleep?");
+        }
+    }
+    public void generate(View view){
+        int[] key = getKey(4);
+        for(int j : key){
+            if(key[j] == 1)
+                playButton1(view);
+            else if(key[j]== 2)
+                playButton2(view);
+            else if(key[j]== 3)
+                playButton3(view);
+            else if(key[j]== 4)
+                playButton4(view);
+            wait(3);
+
+        }
+    }
+
+    //@return an array of integers 0-size, denoting the order
+    //in which the buttons should be pressed
+    public int[] getKey(int size){
+        int[] simon = new int[size];
+        for(int i=0; i<4;i++) simon[i] = (int) (Math.random() * size);
+        return simon;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_simon_says, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+}
