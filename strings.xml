@@ -1,8 +1,4 @@
+<resources>
+    <string name="app_name">SimonSays</string>
 
-
-    <resources>
-        <string name="app_name">My First App</string>
-        <string name="button_send">Hey</string>
-        <string name="action_settings">Settings</string>
-    </resources>
-
+</resources>
